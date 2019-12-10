@@ -1,33 +1,32 @@
-from django.conf import settings
-from django.db import models
-from django.utils import timezone
+from membership.badges.base import Badge, BadgeAwarded
+from membership.badges.registry import badges
 
-class BadgeAward(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, related_name="badges_earned", on_delete=models.CASCADE)
-    awarded_at = models.DateTimeField(default=timezone.now)
-    slug = models.CharField(max_length=255)
-    level = models.IntegerField()
+class PointsBadge(Badge):
+    slug = "Membership"
+    levels = [
+        "Bronze",
+        "Silver",
+        "Gold",
+    ]
+    events = [
+        "points_awarded",
+    ]
+    multiple = False
 
-    def __getattr__(self, attr):
-        return getattr(self._badge, attr)
-    
-    @property
-    def badge(self):
-        return self
+    def award(self, **state):
+        user = state["user"]
+        # points = user.get_profile().points
+        points = int(user.meta['Membership']['Point']['point'])
+        print(points)
+        if points > 10000:
+            print("level 3")
+            return BadgeAwarded(level=3)
+        elif points > 7500:
+            print("level 2")
+            return BadgeAwarded(level=2)
+        elif points > 5000:
+            print("level 1")
+            return BadgeAwarded(level=1)
 
-    @property
-    def _badge(self):
-        from .registry import badges
-        return badges._registry[self.slug]
-    
-    @property
-    def name(self):
-        return self._badge.levels[self.level].name
-    
-    @property
-    def description(self):
-        return self._badge.levels[self.level].description
-    
-    @property
-    def progress(self):
-        return self._badge.progress(self.user, self.level)
+
+badges.register(PointsBadge)

@@ -1,6 +1,7 @@
 from .models import BadgeAward
 from .signals import badge_awarded
 
+
 def abstract_property(name):
     def attr(*args):
         msg = "attribute %r must be defined on child class." % name

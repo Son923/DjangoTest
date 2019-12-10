@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     # Testing apps
     'membership',
+    'membership.badges',
     'account',
     'core',
 

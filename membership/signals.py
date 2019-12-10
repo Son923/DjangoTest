@@ -1,15 +1,11 @@
 from django.db.models.signals import post_save
-from django.dispatch import receiver, Signal
-from .registry import badges
+from django.dispatch import Signal, receiver
 
 from account.models import User
+from membership.badges.registry import badges
 
-# @receiver(post_save, sender=User)
-# def award_membership(sender, instance, **kwargs):
-#     badges.possibly_award_badge("membership_awarded", user=instance)
-#     print("Badge awarded !!!")
-
-
-
-# from pinax-badges
-badge_awarded = Signal(providing_args=["badge"])
+@receiver(post_save, sender=User)
+def ping(sender, instance, **kwargs):
+    print("PING")
+    badges.possibly_award_badge("points_awarded", user=instance)
+    # print(instance.meta['Membership']['Point']['point'])

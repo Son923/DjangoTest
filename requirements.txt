@@ -4,7 +4,7 @@ autopep8==1.4.4
 babel==2.7.0
 beautifulsoup4==4.7.1
 billiard==3.6.1.0
-bleach==2.1.4
+bleach==3.1.4
 boto3==1.9.247
 botocore==1.12.247
 braintree==3.49.0

@@ -10,7 +10,7 @@ botocore==1.12.247
 braintree==3.49.0
 cachetools==3.1.1
 cairocffi==1.1.0
-cairosvg==2.4.2
+cairosvg==2.5.1
 celery==4.3.0
 certifi==2019.9.11
 cffi==1.12.3
